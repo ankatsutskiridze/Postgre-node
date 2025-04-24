@@ -85,10 +85,27 @@ async function deleteProduct(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+// ეს ფუნქცია აბრუნებს პროდუქტების კატეგორიების მიხედვით დათვლილ რაოდენობას
+async function getCategoryStats(req, res) {
+  try {
+    // SQL მოთხოვნა, რომელიც ითვლის კატეგორიების რაოდენობას
+    const result = await pool.query(
+      "SELECT category, COUNT(*) FROM products GROUP BY category"
+    );
+    // პასუხის დაბრუნება JSON ფორმატში
+    res.json(result.rows);
+  } catch (err) {
+    // შეცდომის დაფიქსირება და მომხმარებლისთვის შეტყობინების დაბრუნება
+    console.error("Error executing query", err.stack);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 export {
   getProducts,
   getOneProduct,
   createProduct,
   updateProduct,
   deleteProduct,
+  getCategoryStats,
 };
