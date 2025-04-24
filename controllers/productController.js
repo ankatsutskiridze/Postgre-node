@@ -63,4 +63,32 @@ async function updateProduct(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
-export { getProducts, getOneProduct, createProduct, updateProduct };
+async function deleteProduct(req, res) {
+  try {
+    const { id } = req.params; // იღებს პროდუქტის ID-ს URL-იდან
+
+    // შლის პროდუქტს და აბრუნებს წაშლილ მონაცემს
+    const result = await pool.query(
+      "DELETE FROM products WHERE id = $1 RETURNING *",
+      [id]
+    );
+
+    // თუ rowCount === 0, პროდუქტი ვერ მოიძებნა
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // წარმატებით წაშლის შემდეგ აგზავნის პასუხს
+    res.json({ message: "Product deleted successfully" });
+  } catch (err) {
+    console.error("Error executing query", err.stack);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+export {
+  getProducts,
+  getOneProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+};
