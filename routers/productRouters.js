@@ -16,7 +16,6 @@ router.get("/category-stats", getCategoryStats); // კატეგორიი�
 router.get("/:id", getOneProduct);
 router.post("/", createProduct);
 router.put("/:id", updateProduct);
-router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 
 export default router;
