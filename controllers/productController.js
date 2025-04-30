@@ -3,11 +3,10 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// პროდუქტების მოპოვება
+// პროდუქტების წამოღება
 async function getProducts(req, res) {
   try {
     const products = await prisma.products.findMany();
-    console.log(products);
     res.json(products);
   } catch (err) {
     console.error("Error fetching products", err);
