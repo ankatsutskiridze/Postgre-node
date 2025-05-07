@@ -4,6 +4,7 @@ import express from "express";
 import productRoutes from "./routers/productRouters.js";
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec from "./middlewares/swagger.js";
+import userRouter from "./routers/userRouters.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
