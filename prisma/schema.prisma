@@ -26,3 +26,13 @@ model products {
   description String?   @db.VarChar(255)
   slug        String?   @db.VarChar(255)
 }
+
+model User {
+  id          Int      @id @default(autoincrement())        // უნიკალური იდენტიფიკატორი, ავტომატურად იზრდება
+  created_at  DateTime @default(now()) @db.Timestamp(6)     // ავტომატურად გენერირდება დრო (timestamp)
+  firstName   String   @db.VarChar(255)                     // სახელი, VARCHAR(255) ტიპის
+  lastName    String   @db.VarChar(255)                     // გვარი, VARCHAR(255) ტიპის
+  email       String   @db.VarChar(255)                     // ელ-ფოსტა, VARCHAR(255) ტიპის
+
+  @@map("users")                                            // ბაზაში ეს მოდელი users ცხრილად მიენიჭება
+}
