@@ -8,6 +8,7 @@ import {
   updateUser,
   deleteUser,
   getUserStats,
+  searchUsers,
 } from "../controllers/userController.js";
 
 // იუზერების როუტები
@@ -18,5 +19,5 @@ router.post("/", createUser); // იუზერის შექმნა
 router.put("/:id", updateUser); // იუზერის განახლება (სრული)
 router.delete("/:id", deleteUser); // იუზერის წაშლა
 router.patch("/:id", updateUser); // იუზერის განახლება (ნაწილობრივი)
-
+router.get("/search-users", searchUsers);
 export default router;
