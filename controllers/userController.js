@@ -93,11 +93,12 @@ export const deleteUser = async (req, res) => {
 };
 
 export const searchUsers = (req, res) => {
+  console.log("🔍 searchUsers function called");
   const { search } = req.query;
 
   const users = [
     { id: 1, name: "Anka", email: "anka@example.com" },
-    { id: 2, name: "Nika", email: "nika@example.com" },
+    { id: 3, name: "Luka", email: "lazarashvili@example.com" },
   ];
 
   if (!search) return res.json(users);
@@ -107,6 +108,5 @@ export const searchUsers = (req, res) => {
       user.name.toLowerCase().includes(search.toLowerCase()) ||
       user.email.toLowerCase().includes(search.toLowerCase())
   );
-
   res.json(filtered);
 };
