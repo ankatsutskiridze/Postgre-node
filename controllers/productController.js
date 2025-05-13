@@ -93,6 +93,25 @@ async function getCategoryStats(req, res) {
   }
 }
 
+export const buyProduct = async (req, res) => {
+  const { userId, productId } = req.body;
+
+  try {
+    // ბაზაში შენახვა
+    const purchase = await prisma.purchase.create({
+      data: {
+        userId,
+        productId,
+      },
+    });
+
+    res.json({ message: "პროდუქტი წარმატებით შეიძინე", purchase });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "შეცდომა მოხდა" });
+  }
+};
+
 export {
   getProducts,
   getOneProduct,
