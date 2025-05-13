@@ -8,7 +8,9 @@ import {
   updateProduct,
   deleteProduct,
   getCategoryStats,
+  buyProduct,
 } from "../controllers/productController.js";
+import { auth } from "../middlewares/auth.js";
 
 // მომხმარებლების როუტები
 router.get("/", getProducts);
@@ -18,5 +20,6 @@ router.post("/", createProduct);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 router.patch("/:id", updateProduct);
+router.post("/buyProduct/:id", auth, buyProduct);
 
 export default router;
