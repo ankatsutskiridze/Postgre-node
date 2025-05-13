@@ -111,3 +111,11 @@ export const searchUsers = (req, res) => {
   );
   res.json(filtered);
 };
+export const signup = async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = await prisma.user.create({
+    data: { firstName, lastName, email, password: hashedPassword },
+  });
+  res.json(user);
+};
