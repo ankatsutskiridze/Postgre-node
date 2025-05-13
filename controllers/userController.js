@@ -111,6 +111,7 @@ export const searchUsers = (req, res) => {
   );
   res.json(filtered);
 };
+
 export const signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -118,4 +119,20 @@ export const signup = async (req, res) => {
     data: { firstName, lastName, email, password: hashedPassword },
   });
   res.json(user);
+};
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(401).json({ message: "Invalid password" });
+  }
+
+  res.json({ message: "Login successful" });
 };
