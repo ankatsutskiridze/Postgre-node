@@ -33,6 +33,6 @@ model User {
   firstName   String   @db.VarChar(255)                     // სახელი, VARCHAR(255) ტიპის
   lastName    String   @db.VarChar(255)                     // გვარი, VARCHAR(255) ტიპის
   email       String   @db.VarChar(255)                     // ელ-ფოსტა, VARCHAR(255) ტიპის
-
+  password    String   @db.VarChar(255) 
   @@map("users")                                            // ბაზაში ეს მოდელი users ცხრილად მიენიჭება
 }
