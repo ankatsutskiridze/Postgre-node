@@ -5,19 +5,24 @@ const prisma = new PrismaClient();
 
 // ყველა ფუნქცია Prisma-ს იყენებს და ექსპორტირდება გარე ფაილებისთვის
 
-// ✅ CREATE – მომხმარებლის შექმნა
-export const createUser = async (req, res) => {
-  const { firstName, lastName, email } = req.body;
+// export const createUser = async (req, res) => {
+//   const { firstName, lastName, email, password } = req.body;
 
-  try {
-    const user = await prisma.user.create({
-      data: { firstName, lastName, email },
-    });
-    res.status(201).json(user);
-  } catch (err) {
-    res.status(500).json({ error: "User creation failed" });
-  }
-};
+//   try {
+//     const user = await prisma.user.create({
+//       data: {
+//         firstName,
+//         lastName,
+//         email,
+//         password, // დავამატეთ პაროლი
+//       },
+//     });
+
+//     res.status(201).json(user);
+//   } catch (err) {
+//     res.status(500).json({ error: "User creation failed" });
+//   }
+// };
 
 // ✅ READ – ყველა მომხმარებლის წამოღება
 
@@ -138,4 +143,26 @@ export const login = async (req, res) => {
   });
 
   res.json({ token });
+};
+
+export const createUser = async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  try {
+    // პაროლის ჰაშირება
+    const hashedPassword = await bcrypt.hash(password, 10); // salt rounds 10
+
+    const user = await prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword, // ჰაშირებული პაროლი
+      },
+    });
+
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(500).json({ error: "User creation failed" });
+  }
 };
