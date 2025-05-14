@@ -93,24 +93,27 @@ async function getCategoryStats(req, res) {
   }
 }
 
-export const buyProduct = async (req, res) => {
-  const { userId, productId } = req.body;
-
+async function buyProduct(req, res) {
   try {
-    // ბაზაში შენახვა
-    const purchase = await prisma.purchase.create({
-      data: {
-        userId,
-        productId,
-      },
+    const { id } = req.params; // პროდუქტის ID მოდის URL-დან
+    const { userId } = req.body; // მომხმარებლის ID მოდის body-დან
+
+    // მომხმარებლის შემოწმება
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(userId) }, // ვეძებთ მომხმარებელს ID-ის მიხედვით
     });
 
-    res.json({ message: "პროდუქტი წარმატებით შეიძინე", purchase });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+      // თუ მომხმარებელი ვერ მოიძებნა, ვაბრუნებთ 404
+    }
+
+    // აქ გააგრძელე ლოგიკა: პროდუქტის შემოწმება, შეძენა, ბალანსის შემცირება და ა.შ.
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "შეცდომა მოხდა" });
+    res.status(500).json({ error: "Something went wrong" });
+    // შეცდომის შემთხვევაში ვაბრუნებთ 500
   }
-};
+}
 
 export {
   getProducts,
@@ -119,4 +122,5 @@ export {
   updateProduct,
   deleteProduct,
   getCategoryStats,
+  buyProduct,
 };
