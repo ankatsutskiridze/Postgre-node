@@ -1,6 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-// import pool from "../config/db.config";
-
 const prisma = new PrismaClient();
 
 // პროდუქტების წამოღება
