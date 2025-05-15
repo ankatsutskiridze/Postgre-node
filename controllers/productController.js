@@ -92,7 +92,7 @@ async function getCategoryStats(req, res) {
 }
 async function buyProduct(req, res) {
   try {
-    const { id } = req.params;
+    const productId = req.params.id;
     const userId = req.user.id;
 
     const user = await prisma.user.findUnique({
@@ -103,7 +103,7 @@ async function buyProduct(req, res) {
     }
 
     const product = await prisma.products.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(productId) },
     });
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
@@ -114,14 +114,14 @@ async function buyProduct(req, res) {
     }
 
     await prisma.products.update({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(productId) },
       data: { stock: product.stock - 1 },
     });
 
     const userProduct = await prisma.usersProducts.create({
       data: {
         userId,
-        productId: parseInt(id),
+        productId: parseInt(productId),
       },
     });
 
