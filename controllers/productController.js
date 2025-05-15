@@ -90,7 +90,49 @@ async function getCategoryStats(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+async function buyProduct(req, res) {
+  console.log("aq");
 
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(userId) },
+    });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const product = await prisma.products.findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    if (product.stock <= 0) {
+      return res.status(400).json({ error: "Product out of stock" });
+    }
+
+    await prisma.products.update({
+      where: { id: parseInt(id) },
+      data: { stock: product.stock - 1 },
+    });
+
+    const userProduct = await prisma.UsersProducts.create({
+      data: {
+        userId,
+        productId: parseInt(id),
+      },
+    });
+
+    res.status(201).json({ message: "Porduct successfuly" });
+  } catch (err) {
+    console.error("Error executing query:", err.stock);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
 export {
   getProducts,
   getOneProduct,
@@ -98,4 +140,5 @@ export {
   updateProduct,
   deleteProduct,
   getCategoryStats,
+  buyProduct,
 };
