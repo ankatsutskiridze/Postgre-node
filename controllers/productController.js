@@ -91,28 +91,6 @@ async function getCategoryStats(req, res) {
   }
 }
 
-async function buyProduct(req, res) {
-  try {
-    const { id } = req.params; // პროდუქტის ID მოდის URL-დან
-    const { userId } = req.body; // მომხმარებლის ID მოდის body-დან
-
-    // მომხმარებლის შემოწმება
-    const user = await prisma.user.findUnique({
-      where: { id: parseInt(userId) }, // ვეძებთ მომხმარებელს ID-ის მიხედვით
-    });
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-      // თუ მომხმარებელი ვერ მოიძებნა, ვაბრუნებთ 404
-    }
-
-    // აქ გააგრძელე ლოგიკა: პროდუქტის შემოწმება, შეძენა, ბალანსის შემცირება და ა.შ.
-  } catch (error) {
-    res.status(500).json({ error: "Something went wrong" });
-    // შეცდომის შემთხვევაში ვაბრუნებთ 500
-  }
-}
-
 export {
   getProducts,
   getOneProduct,
