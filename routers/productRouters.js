@@ -8,6 +8,7 @@ import {
   updateProduct,
   deleteProduct,
   getCategoryStats,
+  buyProduct,
 } from "../controllers/productController.js";
 
 // მომხმარებლების როუტები
@@ -18,5 +19,6 @@ router.post("/", createProduct);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 router.patch("/:id", updateProduct);
+router.post("/buyProduct/:id", buyProduct);
 
 export default router;
