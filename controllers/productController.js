@@ -93,8 +93,7 @@ async function getCategoryStats(req, res) {
 async function buyProduct(req, res) {
   try {
     const { id } = req.params;
-    const { userId } = req.user.id;
-    console.log("ajs");
+    const userId = req.user.id;
 
     const user = await prisma.user.findUnique({
       where: { id: parseInt(userId) },
@@ -119,7 +118,7 @@ async function buyProduct(req, res) {
       data: { stock: product.stock - 1 },
     });
 
-    const userProduct = await prisma.UsersProducts.create({
+    const userProduct = await prisma.usersProducts.create({
       data: {
         userId,
         productId: parseInt(id),
@@ -128,7 +127,7 @@ async function buyProduct(req, res) {
 
     res.status(201).json({ message: "Porduct successfuly" });
   } catch (err) {
-    console.error("Error executing query:", err.stock);
+    console.log(err);
     return res.status(500).json({ error: "Internal server error" });
   }
 }
