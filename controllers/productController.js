@@ -98,5 +98,4 @@ export {
   updateProduct,
   deleteProduct,
   getCategoryStats,
-  buyProduct,
 };

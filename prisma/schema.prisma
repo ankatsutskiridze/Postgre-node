@@ -25,6 +25,7 @@ model products {
   stock       Int?
   description String?   @db.VarChar(255)
   slug        String?   @db.VarChar(255)
+  usersProducts UsersProducts[]
 }
 
 model User {
@@ -34,5 +35,17 @@ model User {
   lastName    String   @db.VarChar(255)                     // გვარი, VARCHAR(255) ტიპის
   email       String   @unique @db.VarChar(255)                     // ელ-ფოსტა, VARCHAR(255) ტიპის
   password    String   @db.VarChar(255) 
-  @@map("users")                                            // ბაზაში ეს მოდელი users ცხრილად მიენიჭება
+   usersProducts UsersProducts[]
+
 }
+
+model UsersProducts {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  productId  Int
+
+  user       User     @relation(fields: [userId], references: [id])
+  product   products @relation(fields: [productId], references: [id])
+}
+
+

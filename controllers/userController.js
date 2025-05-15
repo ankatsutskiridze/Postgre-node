@@ -3,29 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
-// ყველა ფუნქცია Prisma-ს იყენებს და ექსპორტირდება გარე ფაილებისთვის
-
-// export const createUser = async (req, res) => {
-//   const { firstName, lastName, email, password } = req.body;
-
-//   try {
-//     const user = await prisma.user.create({
-//       data: {
-//         firstName,
-//         lastName,
-//         email,
-//         password, // დავამატეთ პაროლი
-//       },
-//     });
-
-//     res.status(201).json(user);
-//   } catch (err) {
-//     res.status(500).json({ error: "User creation failed" });
-//   }
-// };
-
-// ✅ READ – ყველა მომხმარებლის წამოღება
-
 export const getUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany();
