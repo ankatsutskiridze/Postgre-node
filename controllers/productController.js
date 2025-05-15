@@ -91,11 +91,10 @@ async function getCategoryStats(req, res) {
   }
 }
 async function buyProduct(req, res) {
-  console.log("aq");
-
   try {
     const { id } = req.params;
-    const { userId } = req.body;
+    const { userId } = req.user.id;
+    console.log("ajs");
 
     const user = await prisma.user.findUnique({
       where: { id: parseInt(userId) },
