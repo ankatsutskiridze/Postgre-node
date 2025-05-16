@@ -10,7 +10,7 @@ import {
   getUserStats,
   searchUsers,
   signup,
-  login,
+  signin,
 } from "../controllers/userController.js";
 
 // იუზერების როუტები
@@ -23,6 +23,6 @@ router.put("/:id", updateUser); // იუზერის განახლე�
 router.delete("/:id", deleteUser); // იუზერის წაშლა
 router.patch("/:id", updateUser); // იუზერის განახლება (ნაწილობრივი)
 router.post("/signup", signup);
-router.post("/login", login);
+router.post("/signin", signin);
 
 export default router;
