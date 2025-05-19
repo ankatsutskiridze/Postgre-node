@@ -118,8 +118,8 @@ export const signin = async (req, res) => {
   const token = jwt.sign({ id: user.id, email }, process.env.JWT_SECRET, {
     expiresIn: "24h",
   });
-
-  res.json({ token });
+  delete user.password;
+  res.json({ token, user });
 };
 
 export const createUser = async (req, res) => {
