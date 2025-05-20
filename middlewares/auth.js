@@ -19,6 +19,8 @@ export const auth = (req, res, next) => {
 
 export const isAdmini = (req, res, next) => {
   if (req.user.role !== "admin")
-    return res.status(401).json({ message: "Unauthorized" });
+    return res
+      .status(401)
+      .json({ message: "Only admins can access this router" });
   next();
 };
