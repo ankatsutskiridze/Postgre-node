@@ -9,8 +9,9 @@ export const auth = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ message: "Invalid token" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
+    console.log(decoded);
 
     req.user = decoded;
     next();
