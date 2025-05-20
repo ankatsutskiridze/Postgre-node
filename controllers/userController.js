@@ -105,7 +105,10 @@ export const signup = async (req, res) => {
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({
+    where: { email: email },
+    include: { roles: true },
+  });
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
@@ -115,9 +118,13 @@ export const signin = async (req, res) => {
     return res.status(401).json({ message: "Invalid password" });
   }
 
-  const token = jwt.sign({ id: user.id, email }, process.env.JWT_SECRET, {
-    expiresIn: "24h",
-  });
+  const token = jwt.sign(
+    { id: user.id, role: user.roles.name },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "24h",
+    }
+  );
   delete user.password;
   res.json({ token, user });
 };
