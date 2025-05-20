@@ -10,7 +10,7 @@ import {
   getCategoryStats,
   buyProduct,
 } from "../controllers/productController.js";
-import { auth } from "../middlewares/auth.js";
+import { auth, isAdmini } from "../middlewares/auth.js";
 
 // მომხმარებლების როუტები
 router.get("/", getProducts);
@@ -18,7 +18,7 @@ router.get("/category-stats", getCategoryStats); // კატეგორიი�
 router.get("/:id", getOneProduct);
 router.post("/", createProduct);
 router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.delete("/:id", auth, isAdmini, deleteProduct);
 router.patch("/:id", updateProduct);
 router.post("/buyProduct/:id", auth, buyProduct);
 
