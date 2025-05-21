@@ -36,6 +36,8 @@ model User {
   email         String          @unique @db.VarChar(255) // ელ-ფოსტა, VARCHAR(255) ტიპის
   password      String          @db.VarChar(255)
   roleId        Int             @default(2)
+  otpCode       String?         @db.VarChar(6)
+  otpExpiry     DateTime?       @db.Timestamp(6)
   roles roles @relation(fields:[roleId],references:[id])
   usersProducts UsersProducts[]
 }
