@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 const prisma = new PrismaClient();
 
 export const getUsers = async (req, res) => {
@@ -149,4 +150,26 @@ export const createUser = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "User creation failed" });
   }
+};
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  const otpCode = Math.floor(10000 + Math.random() * 900000).toString();
+  const otpExpiry = new Date(Data.now() + 10 * 60 * 100);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { otpCode, otpExpiry },
+  });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  res.json({ message: "OTP sent to email" });
 };
