@@ -177,7 +177,16 @@ export const forgotPassword = async (req, res) => {
     from: process.env.EMAIL_USER,
     to: email,
     subject: "otp from password reset",
-    text: `your opt from passeord resete is ${otpCode} `,
+    html: `
+    <div style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
+      <h2>პაროლის აღდგენა</h2>
+      <p>შენი OTP კოდია:</p>
+      <div style="font-size: 32px; color: red; font-weight: bold; letter-spacing: 8px;">
+        ${otp}
+      </div>
+      <p>გთხოვ გამოიყენე ეს კოდი 10 წუთში</p>
+    </div>
+  `,
   };
   try {
     await transporter.sendMail(mailOptions);
