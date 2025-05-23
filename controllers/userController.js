@@ -197,3 +197,24 @@ export const forgotPassword = async (req, res) => {
       .json({ message: "Failed to send email", error: error.message });
   }
 };
+export const resetPassword = async (req, res) => {
+  const { email, otpCode, newPassword } = req.body;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  if (user.otpCode !== otpCode || user.otpExpiry < new Date()) {
+    return res.status(400).json({ message: "Invalid OTP code" });
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { password: hashedPassword, otpCode: null, otpExpiry: null },
+  });
+
+  return res.status(200).json({ message: "Password reset successful" });
+};
