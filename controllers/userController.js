@@ -171,5 +171,20 @@ export const forgotPassword = async (req, res) => {
       pass: process.env.EMAIL_PASS,
     },
   });
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "otp from password reset",
+    text: `your opt from passeord resete is ${otpCode} `,
+  };
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to send email", error: error.message });
+  }
+
   res.json({ message: "OTP sent to email" });
 };
