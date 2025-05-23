@@ -11,6 +11,7 @@ import {
   searchUsers,
   signup,
   signin,
+  forgotPassword,
 } from "../controllers/userController.js";
 
 // იუზერების როუტები
@@ -24,5 +25,6 @@ router.delete("/:id", deleteUser); // იუზერის წაშლა
 router.patch("/:id", updateUser); // იუზერის განახლება (ნაწილობრივი)
 router.post("/signup", signup);
 router.post("/signin", signin);
+router.post("/forget-password", forgotPassword);
 
 export default router;
