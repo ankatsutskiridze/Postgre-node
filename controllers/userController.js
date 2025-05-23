@@ -153,15 +153,15 @@ export const createUser = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-  const { email } = req.body;
   console.log(req.body);
 
+  const { email } = req.body;
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
   const otpCode = Math.floor(10000 + Math.random() * 900000).toString();
-  const otpExpiry = new Date(Data.now() + 10 * 60 * 100);
+  const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 წუთი
   await prisma.user.update({
     where: { id: user.id },
     data: { otpCode, otpExpiry },
