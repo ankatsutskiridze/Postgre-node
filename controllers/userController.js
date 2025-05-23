@@ -182,7 +182,7 @@ export const forgotPassword = async (req, res) => {
       <h2>პაროლის აღდგენა</h2>
       <p>შენი OTP კოდია:</p>
       <div style="font-size: 32px; color: red; font-weight: bold; letter-spacing: 8px;">
-        ${otp}
+        ${otpCode}
       </div>
       <p>გთხოვ გამოიყენე ეს კოდი 10 წუთში</p>
     </div>
@@ -190,9 +190,9 @@ export const forgotPassword = async (req, res) => {
   };
   try {
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email sent successfully" });
+    return res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {
-    res
+    return res
       .status(500)
       .json({ message: "Failed to send email", error: error.message });
   }
