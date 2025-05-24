@@ -200,13 +200,17 @@ export const forgotPassword = async (req, res) => {
 export const resetPassword = async (req, res) => {
   const { email, otpCode, newPassword } = req.body;
 
+  if (!email || !otpCode || !newPassword) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(400).json({ message: "Invalid email or OTP" });
   }
 
   if (user.otpCode !== otpCode || user.otpExpiry < new Date()) {
-    return res.status(400).json({ message: "Invalid OTP code" });
+    return res.status(400).json({ message: "Invalid email or OTP" });
   }
 
   const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -216,5 +220,5 @@ export const resetPassword = async (req, res) => {
     data: { password: hashedPassword, otpCode: null, otpExpiry: null },
   });
 
-  return res.status(200).json({ message: "Password reset successful" });
+  res.json({ message: "Password reset successful" });
 };
