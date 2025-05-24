@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-const prisma = new PrismaClient();
 
 export const getUsers = async (req, res) => {
   try {
@@ -197,6 +196,7 @@ export const forgotPassword = async (req, res) => {
       .json({ message: "Failed to send email", error: error.message });
   }
 };
+
 export const resetPassword = async (req, res) => {
   const { email, otpCode, newPassword } = req.body;
 
