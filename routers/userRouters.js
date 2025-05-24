@@ -12,6 +12,7 @@ import {
   signup,
   signin,
   forgotPassword,
+  resetPassword,
 } from "../controllers/userController.js";
 
 // იუზერების როუტები
@@ -26,5 +27,6 @@ router.patch("/:id", updateUser); // იუზერის განახლე
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forget-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;
