@@ -57,3 +57,5 @@ model UsersProducts {
   user    User     @relation(fields: [userId], references: [id])
   product products @relation(fields: [productId], references: [id])
 }
+
+model Product
