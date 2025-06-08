@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 const prisma = new PrismaClient();
+
 export const getUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany();
