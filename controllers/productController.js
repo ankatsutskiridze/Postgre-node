@@ -1,4 +1,4 @@
-import { pool } from "../db.js";
+import { pool } from "../config/db.config.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
