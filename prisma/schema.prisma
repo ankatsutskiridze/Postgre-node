@@ -35,3 +35,12 @@ model users {
     created_at  DateTime @default(now())
 
 }
+
+model usersProducts {
+    id        Int      @id @default(autoincrement())
+    userId    Int
+    productId Int
+    user      User     @relation(fields: [userId], references: [id])
+    product   products @relation(fields: [productId], references: [id])
+
+}
