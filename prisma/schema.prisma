@@ -14,6 +14,7 @@ model category {
     description String?   @db.VarChar(255)
     products    products[]
 }
+
 model products {
     id          Int       @id(map: "untitled_table_pkey") @default(autoincrement())
     created_at  DateTime  @default(now()) @db.Timestamp(6)

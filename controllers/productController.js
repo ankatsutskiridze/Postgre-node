@@ -5,7 +5,15 @@ const prisma = new PrismaClient();
 // პროდუქტების წამოღება
 async function getProducts(req, res) {
   try {
-    const result = await prisma.products.findMany();
+    const result = await prisma.products.findMany({
+      include: {
+        category: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
     res.json(result);
   } catch (err) {
     console.error("Error fetching products", err);
