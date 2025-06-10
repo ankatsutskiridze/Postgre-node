@@ -14,3 +14,14 @@ model category {
     description String?   @db.VarChar(255)
     products    products[]
 }
+model products {
+    id          Int       @id(map: "untitled_table_pkey") @default(autoincrement())
+    created_at  DateTime  @default(now()) @db.Timestamp(6)
+    name        String?   @db.VarChar(255)
+    price       Decimal?  @db.Decimal
+    categoryId  Int?
+    category    category? @relation(fields: [categoryId], references: [id])
+    stock       Int?
+    description String?   @db.VarChar(255)
+    slug        String?   @db.VarChar(255)
+}
