@@ -136,8 +136,11 @@ async function buyProduct(req, res) {
         productId: parseInt(productId),
       },
     });
-
-    res.status(201).json({ message: "Porduct successfuly" });
+    res.json({
+      message: "Product purchased successfully",
+      userProduct,
+    });
+    res.status(201).json({ message: "Product purchased successfully" });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Internal server error" });
