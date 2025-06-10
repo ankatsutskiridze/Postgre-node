@@ -42,11 +42,17 @@ async function getOneProduct(req, res) {
 async function createProduct(req, res) {
   try {
     const { name, price, stock, description, slug, category } = req.body;
-    const result = await pool.query(
-      "INSERT INTO products (name, price, stock, description, slug, category) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-      [name, price, stock, description, slug, category]
-    );
-    res.json(result.rows[0]);
+    const result = await prisma.products.create({
+      data: {
+        name,
+        price,
+        stock,
+        description,
+        slug,
+        category,
+      },
+    });
+    res.json(result);
   } catch (err) {
     console.error("Error creating product", err);
     res.status(500).json({ error: "Internal server error" });
