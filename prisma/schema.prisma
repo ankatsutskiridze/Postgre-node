@@ -31,6 +31,6 @@ model users {
     firstName   String?  @db.VarChar(255)
     lastName    String?  @db.VarChar(255)
     email       String?  @db.VarChar(255)
-    created_at  DateTime @default(now())
-    @db.Timestamp(6) // Added for consistency
+
+  
 }
