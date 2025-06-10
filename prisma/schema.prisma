@@ -25,6 +25,7 @@ model products {
     stock       Int?
     description String?   @db.VarChar(255)
     slug        String?   @db.VarChar(255)
+    usersProducts usersProducts[]
 }
 
 model users {
@@ -33,7 +34,7 @@ model users {
     lastName    String?  @db.VarChar(255)
     email       String?  @db.VarChar(255)
     created_at  DateTime @default(now())
-
+    usersProducts usersProducts[]
 }
 
 model usersProducts {
@@ -42,5 +43,5 @@ model usersProducts {
     productId Int
     user      User     @relation(fields: [userId], references: [id])
     product   products @relation(fields: [productId], references: [id])
-
+    usersProducts usersProducts[]
 }
