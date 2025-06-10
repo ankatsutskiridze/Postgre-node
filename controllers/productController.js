@@ -81,9 +81,11 @@ async function getCategoryStats(req, res) {
   try {
     const categoryStats = await prisma.products.groupBy({
       by: ["category"],
-      _count: {
-        category: true,
-      },
+      _count: true,
+      avg: { price: true },
+      _sum: { stock: true },
+      _max: { price: true },
+      _min: { price: true },
     });
     res.json(categoryStats);
   } catch (err) {
