@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 // პროდუქტების წამოღება
 async function getProducts(req, res) {
   try {
-    const result = await pool.query("SELECT * FROM products");
-    res.json(result.rows);
+    const result = await prisma.products.findMany();
+    res.json(result);
   } catch (err) {
     console.error("Error fetching products", err);
     res.status(500).json({ error: "Internal server error" });
