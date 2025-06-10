@@ -13,7 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^6.6.0",
+    "@prisma/client": "^6.9.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
@@ -21,8 +21,10 @@
     "multer": "^2.0.0",
     "nodemailer": "^7.0.3",
     "pg": "^8.14.1",
-    "prisma": "^6.6.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "prisma": "^6.9.0"
   }
 }
