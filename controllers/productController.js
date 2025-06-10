@@ -107,7 +107,7 @@ async function buyProduct(req, res) {
     const productId = req.params.id;
     const userId = req.user.id;
 
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: { id: parseInt(userId) },
     });
     if (!user) {
