@@ -91,6 +91,7 @@ async function getCategoryStats(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
 async function buyProduct(req, res) {
   try {
     const productId = req.params.id;
