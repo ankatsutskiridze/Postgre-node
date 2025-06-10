@@ -26,11 +26,3 @@ model products {
     description String?   @db.VarChar(255)
     slug        String?   @db.VarChar(255)
 }
-model users {
-    id          Int      @id @default(autoincrement())
-    firstName   String?  @db.VarChar(255)
-    lastName    String?  @db.VarChar(255)
-    email       String?  @db.VarChar(255)
-    created_at  DateTime @default(now())
-
-}
