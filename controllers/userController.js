@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.users.findMany();
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch users" });
@@ -17,7 +17,7 @@ export const getOneUser = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: { id: Number(id) },
     });
 
@@ -34,7 +34,7 @@ export const getOneUser = async (req, res) => {
 
 export const getUserStats = async (req, res) => {
   try {
-    const count = await prisma.user.count();
+    const count = await prisma.users.count();
     res.json({ totalUsers: count });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch user stats" });
@@ -45,7 +45,7 @@ export const updateUser = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, email } = req.body;
   try {
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.users.findUnique({
       where: { id: Number(id) },
     });
 
@@ -53,7 +53,7 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await prisma.users.update({
       where: { id: Number(id) },
       data: { firstName, lastName, email },
     });
@@ -67,7 +67,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    await prisma.user.delete({
+    await prisma.users.delete({
       where: { id: Number(id) },
     });
     res.json({ message: "User deleted successfully" });
@@ -98,7 +98,7 @@ export const searchUsers = (req, res) => {
 export const signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await prisma.user.create({
+  const user = await prisma.users.create({
     data: { firstName, lastName, email, password: hashedPassword },
   });
   res.json(user);
@@ -106,7 +106,7 @@ export const signup = async (req, res) => {
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
-  const user = await prisma.user.findUnique({
+  const user = await prisma.users.findUnique({
     where: { email: email },
     include: { roles: true },
   });
@@ -137,7 +137,7 @@ export const createUser = async (req, res) => {
     // პაროლის ჰაშირება
     const hashedPassword = await bcrypt.hash(password, 10); // salt rounds 10
 
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data: {
         firstName,
         lastName,
@@ -156,13 +156,13 @@ export const forgotPassword = async (req, res) => {
   console.log(req.body);
 
   const { email } = req.body;
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.users.findUnique({ where: { email } });
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
   const otpCode = Math.floor(10000 + Math.random() * 900000).toString();
   const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 წუთი
-  await prisma.user.update({
+  await prisma.users.update({
     where: { id: user.id },
     data: { otpCode, otpExpiry },
   });
@@ -205,7 +205,7 @@ export const resetPassword = async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.users.findUnique({ where: { email } });
   if (!user) {
     return res.status(400).json({ message: "Invalid email or OTP" });
   }
@@ -216,7 +216,7 @@ export const resetPassword = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-  await prisma.user.update({
+  await prisma.users.update({
     where: { id: user.id },
     data: { password: hashedPassword, otpCode: null, otpExpiry: null },
   });
