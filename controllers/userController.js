@@ -110,7 +110,7 @@ export const signin = async (req, res) => {
 
     const user = await prisma.users.findUnique({
       where: { email },
-      include: { role: true }, // ← აქ ემატება როლის ჩათრევა
+      include: { roles: true }, // ← აქ ემატება როლის ჩათრევა
     });
 
     if (!user) {
