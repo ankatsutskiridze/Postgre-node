@@ -44,6 +44,7 @@ model users {
 model roles{
    id          Int      @id @default(autoincrement())
    name        String?  @db.VarChar(255)
+   users       users[]
 }
 
 model usersProducts {
