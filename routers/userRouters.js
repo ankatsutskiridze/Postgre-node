@@ -14,16 +14,17 @@ import {
   forgotPassword,
   resetPassword,
 } from "../controllers/userController.js";
+import { auth } from "../middleware/auth.js";
 
 // იუზერების როუტები
 router.get("/search-users", searchUsers);
 router.get("/", getUsers); // ყველა იუზერის წამოღება
 router.get("/stats", getUserStats); // იუზერების სტატისტიკა
 router.get("/:id", getOneUser); // კონკრეტული იუზერის წამოღება
-router.post("/", createUser); // იუზერის შექმნა
-router.put("/:id", updateUser); // იუზერის განახლება (სრული)
-router.delete("/:id", deleteUser); // იუზერის წაშლა
-router.patch("/:id", updateUser); // იუზერის განახლება (ნაწილობრივი)
+router.post("/", auth, createUser); // იუზერის შექმნა
+router.put("/:id", auth, updateUser); // იუზერის განახლება (სრული)
+router.delete("/:id", auth, deleteUser); // იუზერის წაშლა
+router.patch("/:id", auth, updateUser); // იუზერის განახლება (ნაწილობრივი)
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forget-password", forgotPassword);
