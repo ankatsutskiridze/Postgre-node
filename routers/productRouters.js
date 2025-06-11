@@ -14,8 +14,8 @@ import { auth } from "../middleware/auth.js";
 
 // მომხმარებლების როუტები
 router.get("/", getProducts);
-router.get("/category-stats", getCategoryStats); // კატეგორიის სტატისტიკა
-router.get("/:id", getOneProduct);
+router.get("/category-stats", auth, getCategoryStats); // კატეგორიის სტატისტიკა
+router.get("/:id", auth, getOneProduct);
 router.post("/", auth, createProduct);
 router.put("/:id", auth, updateProduct);
 router.delete("/:id", auth, deleteProduct);
