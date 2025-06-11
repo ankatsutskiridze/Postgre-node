@@ -105,29 +105,35 @@ export const signup = async (req, res) => {
 };
 
 export const signin = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await prisma.users.findUnique({
-    where: { email: email },
-    include: { roles: true },
-  });
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
+  try {
+    const { email, password } = req.body;
+    const user = await prisma.users.findUnique({
+      where: { email },
+      include: { roles: true },
+    });
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    return res.status(401).json({ message: "Invalid password" });
-  }
-
-  const token = jwt.sign(
-    { id: user.id, role: user.roles.name },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "24h",
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  );
-  delete user.password;
-  res.json({ token, user });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, role: user.roles?.name || null },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+
+    const { password: pw, ...userWithoutPassword } = user;
+
+    res.json({ token, user: userWithoutPassword });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export const createUser = async (req, res) => {
