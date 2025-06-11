@@ -35,7 +35,9 @@ model users {
     email       String   @unique  @db.VarChar(255)
     created_at  DateTime @default(now())
     password    String   @db.VarChar(255)
+    roleId       int
     usersProducts usersProducts[]
+    
 }
 
 model roles{
