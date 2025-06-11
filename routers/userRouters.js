@@ -17,10 +17,10 @@ import {
 import { auth } from "../middleware/auth.js";
 
 // იუზერების როუტები
-router.get("/search-users", searchUsers);
-router.get("/", getUsers); // ყველა იუზერის წამოღება
-router.get("/stats", getUserStats); // იუზერების სტატისტიკა
-router.get("/:id", getOneUser); // კონკრეტული იუზერის წამოღება
+router.get("/search-users", auth, searchUsers);
+router.get("/", auth, getUsers); // ყველა იუზერის წამოღება
+router.get("/stats", auth, getUserStats); // იუზერების სტატისტიკა
+router.get("/:id", auth, getOneUser); // კონკრეტული იუზერის წამოღება
 router.post("/", auth, createUser); // იუზერის შექმნა
 router.put("/:id", auth, updateUser); // იუზერის განახლება (სრული)
 router.delete("/:id", auth, deleteUser); // იუზერის წაშლა
