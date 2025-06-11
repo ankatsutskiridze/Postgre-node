@@ -34,6 +34,7 @@ model users {
     lastName    String?  @db.VarChar(255)
     email       String?  @db.VarChar(255)
     created_at  DateTime @default(now())
+    password  String   @db.VarChar(255)
     usersProducts usersProducts[]
 }
 
@@ -43,5 +44,5 @@ model usersProducts {
     productId Int
     user      users     @relation(fields: [userId], references: [id])
     product   products @relation(fields: [productId], references: [id])
-  
+    
 }
