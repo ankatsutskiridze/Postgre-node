@@ -226,7 +226,6 @@ export const resetPassword = async (req, res) => {
   const hashedPassword = await bcrypt.hash(newPassword, 10);
 
   await prisma.users.update({
-    where: { id: user.id },
     data: { password: hashedPassword, otpCode: null, otpExpiry: null },
   });
 
