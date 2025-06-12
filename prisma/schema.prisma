@@ -37,7 +37,7 @@ model users {
     password    String   @db.VarChar(255)
     roleId      Int      @default(2)
     roles       roles    @relation(fields: [roleId], references: [id])
-    otpCode    String?  @db.VarChar(6)
+    otpCode     String?  @db.VarChar(6)
     otpExpiry   DateTime? @db.Timestamp(6)
     usersProducts usersProducts[]
     
