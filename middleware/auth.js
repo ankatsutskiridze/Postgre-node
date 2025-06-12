@@ -15,8 +15,10 @@ export const auth = (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  if (!req.user || !req.user.roles || !req.user.roles.includes("admin")) {
-    return res.status(403).json({ message: "Forbidden" });
+  if (req.user.roles !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Only admins can access this resource" });
   }
   next();
 };
