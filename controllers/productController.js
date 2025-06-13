@@ -1,5 +1,6 @@
 // import pool from "../config/db.config.js";
 import { PrismaClient } from "@prisma/client";
+import fs from "fs";
 const prisma = new PrismaClient();
 
 // პროდუქტების წამოღება
@@ -155,14 +156,19 @@ async function buyProduct(req, res) {
 async function updateProductImages(req, res) {
   try {
     const { id } = req.params;
-    const { images } = req.body;
-
-    const updatedProduct = await prisma.products.update({
+    const product = await prisma.products.findUnique({
       where: { id: parseInt(id) },
-      data: { images },
     });
-
-    res.json(updatedProduct);
+    if (!product) {
+      if (req.file.length > 0) {
+        req.file.forEach((file) => {
+          if (file) {
+            fs.unlinkSync(file.path);
+            fs.unlinkSync(file.path);
+          }
+        });
+      }
+    }
   } catch (err) {
     console.error("Error updating product images", err);
     res.status(500).json({ error: "Internal server error" });
