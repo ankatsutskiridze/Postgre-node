@@ -32,7 +32,7 @@ router.post("/signin", signin);
 router.post("/forget-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 router.post(
-  "/users/update-picture/:id",
+  "/update-picture/:id",
   upload.single("profilePicture"),
   updateProfilePicture
 );
