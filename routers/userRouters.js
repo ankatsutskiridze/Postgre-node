@@ -29,5 +29,6 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forget-password", forgotPassword);
 router.post("/reset-password", resetPassword);
+router.post("/users/updete-picute");
 
 export default router;
