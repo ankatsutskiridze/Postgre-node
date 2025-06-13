@@ -231,3 +231,19 @@ export const resetPassword = async (req, res) => {
 
   res.json({ message: "Password reset successful" });
 };
+
+export const updateProfilePicture = async (req, res) => {
+  const userId = req.user.id;
+  const { profilePicture } = req.body;
+
+  try {
+    const user = await prisma.users.update({
+      where: { id: userId },
+      data: { profilePicture },
+    });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update profile picture" });
+  }
+};
