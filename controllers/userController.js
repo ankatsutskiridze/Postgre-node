@@ -33,7 +33,23 @@ export const getOneUser = async (req, res) => {
 };
 
 export const updateProfilePicture = async (req, res) => {
-  res.json({ message: "Profile picture updated successfully." });
+  const { id } = req.params;
+  const { file } = req;
+
+  if (!file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+
+  try {
+    const user = await prisma.users.update({
+      where: { id: Number(id) },
+      data: { profilePicture: file.path }, // Assuming 'profilePicture' is a field in your users table
+    });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update profile picture" });
+  }
 };
 
 export const getUserStats = async (req, res) => {
