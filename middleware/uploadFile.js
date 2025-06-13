@@ -30,19 +30,4 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 }); // 5MB limit
 
-const filterExcel = (req, file, cb) => {
-  const allowedTypes = [".xlsx", ".xls"];
-  const extname = path.extname(file.originalname);
-  if (allowedTypes.includes(extname)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only Excel files are allowed"), false);
-  }
-};
-const uploadExcel = multer({
-  storage: storage,
-  fileFilter: filterExcel,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-});
-
-export { upload, uploadExcel };
+export default upload;
