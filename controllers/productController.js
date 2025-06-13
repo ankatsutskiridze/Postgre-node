@@ -153,6 +153,7 @@ async function buyProduct(req, res) {
     return res.status(500).json({ error: "Internal server error" });
   }
 }
+
 async function updateProductImages(req, res) {
   try {
     const { id } = req.params;
@@ -162,8 +163,7 @@ async function updateProductImages(req, res) {
     if (!product) {
       if (req.file.length > 0) {
         req.file.forEach((file) => {
-          if (file) {
-            fs.unlinkSync(file.path);
+          if (fs.existsSync(file.path)) {
             fs.unlinkSync(file.path);
           }
         });
