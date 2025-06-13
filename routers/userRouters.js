@@ -30,6 +30,6 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forget-password", forgotPassword);
 router.post("/reset-password", resetPassword);
-router.post("/users/update-picture", updateProfilePicture);
+router.post("/users/update-picture/:id", updateProfilePicture);
 
 export default router;
