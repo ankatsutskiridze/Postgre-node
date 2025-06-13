@@ -30,4 +30,20 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 }); // 5MB limit
 
-export default upload;
+const filterProductImage = (req, file, cb) => {
+  const allowedTypes = [".jpg", ".jpeg", ".png"];
+  const extname = path.extname(file.originalname);
+  if (allowedTypes.includes(extname)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only image files are allowed"), false);
+  }
+};
+
+const uploadProductImage = multer({
+  storage: storage,
+  fileFilter: filterProductImage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+}); // 5MB limit
+
+export default { upload, uploadProductImage };
