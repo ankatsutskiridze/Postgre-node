@@ -45,4 +45,4 @@ const uploadExcel = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
 });
 
-export default { upload, uploadExcel };
+export { upload, uploadExcel };

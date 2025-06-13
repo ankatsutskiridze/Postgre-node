@@ -36,5 +36,6 @@ router.post(
   upload.single("profilePicture"),
   updateProfilePicture
 );
+router.post("/ex");
 
 export default router;
