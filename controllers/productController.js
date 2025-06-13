@@ -179,7 +179,7 @@ async function updateProductImages(req, res) {
   const productImages = await prisma.productImage.createMany({
     data: req.file.map((file) => ({
       productId: parseInt(id),
-      imageUrl: file.path,
+      url: file.path,
     })),
   });
   res.json({ message: "Product images updated successfully" });
