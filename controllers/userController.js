@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import multer from "multer";
 const prisma = new PrismaClient();
 
 export const getUsers = async (req, res) => {
