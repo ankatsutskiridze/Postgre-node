@@ -173,6 +173,16 @@ async function updateProductImages(req, res) {
     console.error("Error updating product images", err);
     res.status(500).json({ error: "Internal server error" });
   }
+  if (!req.file || req.file.length === 0) {
+    return res.status(400).json({ error: "No images uploaded" });
+  }
+  const productImages = await prisma.productImage.createMany({
+    data: req.file.map((file) => ({
+      productId: parseInt(id),
+      imageUrl: file.path,
+    })),
+  });
+  res.json({ message: "Product images updated successfully" });
 }
 
 export {
