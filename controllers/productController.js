@@ -152,6 +152,22 @@ async function buyProduct(req, res) {
     return res.status(500).json({ error: "Internal server error" });
   }
 }
+async function updateProductImages(req, res) {
+  try {
+    const { id } = req.params;
+    const { images } = req.body;
+
+    const updatedProduct = await prisma.products.update({
+      where: { id: parseInt(id) },
+      data: { images },
+    });
+
+    res.json(updatedProduct);
+  } catch (err) {
+    console.error("Error updating product images", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 
 export {
   getProducts,
@@ -161,4 +177,5 @@ export {
   deleteProduct,
   getCategoryStats,
   buyProduct,
+  updateProductImages,
 };
