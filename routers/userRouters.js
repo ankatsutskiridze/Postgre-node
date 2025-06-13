@@ -13,6 +13,7 @@ import {
   signin,
   forgotPassword,
   resetPassword,
+  updateProfilePicture,
 } from "../controllers/userController.js";
 import { auth } from "../middleware/auth.js";
 
@@ -29,6 +30,6 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forget-password", forgotPassword);
 router.post("/reset-password", resetPassword);
-router.post("/users/updete-picute");
+router.post("/users/update-picture", updateProfilePicture);
 
 export default router;
