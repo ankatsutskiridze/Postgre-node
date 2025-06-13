@@ -213,7 +213,6 @@ export const resetPassword = async (req, res) => {
   if (!email || !otpCode || !newPassword) {
     return res.status(400).json({ message: "All fields are required" });
   }
-
   const user = await prisma.users.findUnique({ where: { email } });
   if (!user) {
     return res.status(400).json({ message: "Invalid email or OTP" });
