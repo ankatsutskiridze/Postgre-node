@@ -5,5 +5,6 @@ export class AppError extends Error {
     this.statusCode = statusCode;
     this.status = statusCode.startsWith("4") || statusCode.startsWith("5");
     this.isOperational = true; // Indicates that this is an operational error
+    this.errorMessage = message; // Custom error message
   }
 }
