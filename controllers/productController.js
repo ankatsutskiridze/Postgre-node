@@ -39,7 +39,6 @@ async function getOneProduct(req, res) {
   }
 }
 
-// პროდუქტის შექმნა
 async function createProduct(req, res) {
   try {
     const { name, price, stock, description, slug, category } = req.body;
