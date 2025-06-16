@@ -60,7 +60,6 @@ async function createProduct(req, res) {
   }
 }
 
-// პროდუქტის განახლება
 async function updateProduct(req, res) {
   try {
     const { id } = req.params;
