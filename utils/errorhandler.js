@@ -1,21 +1,20 @@
 export class AppError extends Error {
   constructor(message, statusCode) {
-    super(message, statusCode); // Call the parent constructor with the error message
-    this.message = message;
+    super(message); // მხოლოდ message-ს გადავცემთ
     this.statusCode = statusCode;
-    this.status = statusCode.startsWith("4") || statusCode.startsWith("5");
-    this.isOperational = true; // Indicates that this is an operational error
-    this.errorMessage = message; // Custom error message
+    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
+    this.isOperational = true;
+
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
 export const handleError = (err, req, res, next) => {
-  // Log the error for debugging purposes
-  console.error(err);
+  console.error("Error:", err);
 
-  // Set the response status code and message
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
+
   if (!err.isOperational) {
     return res.status(statusCode).json({
       status: "error",
@@ -23,25 +22,16 @@ export const handleError = (err, req, res, next) => {
     });
   }
 
-  if (process.env.NODE_ENV === "development") {
-    console.error("Error details:", {
-      statusCode,
-      message,
-      stack: err.stack, // Log the stack trace in development mode
-    });
-  } else if (process.env.NODE_ENV === "production") {
-    console.error("Error details:", {
-      statusCode,
-      message,
-    });
-  }
-
-  // Send the error response
-  res.status(statusCode).json({
+  // Error details for development and production environments
+  const response = {
     status: err.status,
     message: message,
-    error: err,
-    stack: err.stack, // Include stack trace for debugging
-    error: process.env.NODE_ENV === "development" ? err : {}, // Show full error in development mode
-  });
+  };
+
+  if (process.env.NODE_ENV === "development") {
+    response.stack = err.stack;
+    response.error = err;
+  }
+
+  res.status(statusCode).json(response);
 };
