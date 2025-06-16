@@ -17,6 +17,19 @@ export const handleError = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
 
+  if (process.env.NODE_ENV === "development") {
+    console.error("Error details:", {
+      statusCode,
+      message,
+      stack: err.stack, // Log the stack trace in development mode
+    });
+  } else if (process.env.NODE_ENV === "production") {
+    console.error("Error details:", {
+      statusCode,
+      message,
+    });
+  }
+
   // Send the error response
   res.status(statusCode).json({
     status: err.status,
