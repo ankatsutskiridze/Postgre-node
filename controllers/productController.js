@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 const prisma = new PrismaClient();
 
-// პროდუქტების წამოღება
 async function getProducts(req, res) {
   try {
     const result = await prisma.products.findMany({
