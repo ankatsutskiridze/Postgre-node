@@ -21,6 +21,8 @@ export const handleError = (err, req, res, next) => {
   res.status(statusCode).json({
     status: err.status,
     message: message,
+    error: err,
+    stack: err.stack, // Include stack trace for debugging
     error: process.env.NODE_ENV === "development" ? err : {}, // Show full error in development mode
   });
 };
