@@ -21,7 +21,7 @@ import { auth } from "../middleware/auth.js";
 router.get("/search-users", auth, searchUsers);
 router.get("/", auth, getUsers);
 router.get("/stats", auth, getUserStats);
-router.get("/:id", auth, getOneUser); // კონკრეტული იუზერის წამოღება
+router.get("/:id", auth, getOneUser);
 router.post("/", auth, createUser); // იუზერის შექმნა
 router.put("/:id", auth, updateUser); // იუზერის განახლება (სრული)
 router.delete("/:id", auth, deleteUser); // იუზერის წაშლა
