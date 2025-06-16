@@ -22,7 +22,6 @@ async function getProducts(req, res) {
   }
 }
 
-// კონკრეტული პროდუქტით
 async function getOneProduct(req, res) {
   try {
     const { id } = req.params;
