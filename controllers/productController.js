@@ -76,8 +76,6 @@ async function updateProduct(req, res) {
   }
 }
 
-// პროდუქტის წაშლა
-
 async function deleteProduct(req, res) {
   try {
     const { id } = req.params;
