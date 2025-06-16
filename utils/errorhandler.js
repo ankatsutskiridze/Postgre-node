@@ -8,3 +8,19 @@ export class AppError extends Error {
     this.errorMessage = message; // Custom error message
   }
 }
+
+export const handleError = (err, req, res, next) => {
+  // Log the error for debugging purposes
+  console.error(err);
+
+  // Set the response status code and message
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+
+  // Send the error response
+  res.status(statusCode).json({
+    status: err.status,
+    message: message,
+    error: process.env.NODE_ENV === "development" ? err : {}, // Show full error in development mode
+  });
+};
