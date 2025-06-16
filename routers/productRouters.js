@@ -15,7 +15,7 @@ import {
 import { auth, isAdmin } from "../middleware/auth.js";
 
 router.get("/", getProducts);
-router.get("/category-stats", auth, getCategoryStats); // კატეგორიის სტატისტიკა
+router.get("/category-stats", auth, getCategoryStats);
 router.get("/:id", auth, getOneProduct);
 router.post("/", auth, createProduct);
 router.put("/:id", auth, updateProduct);
