@@ -22,7 +22,7 @@ router.get("/search-users", auth, searchUsers);
 router.get("/", auth, getUsers);
 router.get("/stats", auth, getUserStats);
 router.get("/:id", auth, getOneUser);
-router.post("/", auth, createUser); // იუზერის შექმნა
+router.post("/", auth, createUser);
 router.put("/:id", auth, updateUser); // იუზერის განახლება (სრული)
 router.delete("/:id", auth, deleteUser); // იუზერის წაშლა
 router.patch("/:id", auth, updateUser); // იუზერის განახლება (ნაწილობრივი)
