@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-
+import { AppError } from "../utils/errorhandler.js";
 const prisma = new PrismaClient();
 
 export const getUsers = async (req, res) => {
