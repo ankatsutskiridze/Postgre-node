@@ -16,6 +16,12 @@ export const handleError = (err, req, res, next) => {
   // Set the response status code and message
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
+  if (!err.isOperational) {
+    return res.status(statusCode).json({
+      status: "error",
+      message: "Something went wrong!",
+    });
+  }
 
   if (process.env.NODE_ENV === "development") {
     console.error("Error details:", {
