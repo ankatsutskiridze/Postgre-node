@@ -18,7 +18,6 @@ import {
 } from "../controllers/userController.js";
 import { auth } from "../middleware/auth.js";
 
-// იუზერების როუტები
 router.get("/search-users", auth, searchUsers);
 router.get("/", auth, getUsers); // ყველა იუზერის წამოღება
 router.get("/stats", auth, getUserStats); // იუზერების სტატისტიკა
