@@ -14,6 +14,11 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRouter);
+
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
 app.use(handleError);
 // Start server
 app.listen(port, () => {
