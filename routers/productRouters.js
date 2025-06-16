@@ -14,7 +14,6 @@ import {
 } from "../controllers/productController.js";
 import { auth, isAdmin } from "../middleware/auth.js";
 
-// მომხმარებლების როუტები
 router.get("/", getProducts);
 router.get("/category-stats", auth, getCategoryStats); // კატეგორიის სტატისტიკა
 router.get("/:id", auth, getOneProduct);
