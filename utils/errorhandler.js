@@ -1,6 +1,6 @@
 export class AppError extends Error {
   constructor(message, statusCode) {
-    super(message); // მხოლოდ message-ს გადავცემთ
+    super(message);
     this.statusCode = statusCode;
     this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
     this.isOperational = true;
@@ -22,7 +22,6 @@ export const handleError = (err, req, res, next) => {
     });
   }
 
-  // Error details for development and production environments
   const response = {
     status: err.status,
     message: message,
