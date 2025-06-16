@@ -125,7 +125,7 @@ export const signup = async (req, res) => {
   res.json(user);
 };
 
-export const signin = async (req, res) => {
+export const signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -140,7 +140,7 @@ export const signin = async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid password" });
+      return next(new AppError("Invalid password", 401));
     }
 
     const token = jwt.sign(
