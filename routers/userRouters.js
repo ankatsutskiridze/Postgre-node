@@ -19,7 +19,7 @@ import {
 import { auth } from "../middleware/auth.js";
 
 router.get("/search-users", auth, searchUsers);
-router.get("/", auth, getUsers); // ყველა იუზერის წამოღება
+router.get("/", auth, getUsers);
 router.get("/stats", auth, getUserStats); // იუზერების სტატისტიკა
 router.get("/:id", auth, getOneUser); // კონკრეტული იუზერის წამოღება
 router.post("/", auth, createUser); // იუზერის შექმნა
