@@ -91,7 +91,6 @@ async function deleteProduct(req, res) {
   }
 }
 
-// კატეგორიების სტატისტიკა
 async function getCategoryStats(req, res) {
   try {
     const categoryStats = await prisma.products.groupBy({
