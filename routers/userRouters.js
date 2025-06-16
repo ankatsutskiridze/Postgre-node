@@ -24,7 +24,7 @@ router.get("/stats", auth, getUserStats);
 router.get("/:id", auth, getOneUser);
 router.post("/", auth, createUser);
 router.put("/:id", auth, updateUser);
-router.delete("/:id", auth, deleteUser); // იუზერის წაშლა
+router.delete("/:id", auth, deleteUser);
 router.patch("/:id", auth, updateUser); // იუზერის განახლება (ნაწილობრივი)
 router.post("/signup", signup);
 router.post("/signin", signin);
