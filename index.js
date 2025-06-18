@@ -20,7 +20,7 @@ app.use("/api/users", userRouter);
 // });
 
 app.use(handleError);
-// Start server
+
 app.listen(port, () => {
   console.log(`server is running  ${port} port`);
 });
